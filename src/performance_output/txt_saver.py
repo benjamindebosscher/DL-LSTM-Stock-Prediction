@@ -55,7 +55,7 @@ def PerformanceSaver(data_obj, run_data, KPI,  n_predict_once, num_unrollings, b
 	headers = list(KPI.keys())
 	indices = [] # Index list for index of each lowest KPI from every epoch
 			### Read current All_data csv file
-	data_saver = pd.read_csv('src/performance_output/PerformanceFiles/All_data.csv')
+	data_saver = pd.read_csv('src/performance_output/PerformanceFiles/All_results.csv')
 	cnt= 0 
 	for header in headers:
 		ind = KPI[header].index(min(KPI[header]))
@@ -80,7 +80,7 @@ def PerformanceSaver(data_obj, run_data, KPI,  n_predict_once, num_unrollings, b
 		data_temp[h] = KPI[h][ind_chosen]
 	data_toadd = pd.DataFrame(data_temp, index = [0])
 	data_all = pd.concat([data_toadd, data_toadd,data_toadd], ignore_index = True)
-	data_all.to_csv('src/performance_output/PerformanceFiles/All_data.csv')
+	data_all.to_csv('src/performance_output/PerformanceFiles/All_results.csv')
 	print('Best prediction epoch: ', ind_chosen, ' with KPI: ')
 	for key in KPI.keys():
 		print('KPI: ', key, ' =', KPI[key][ind_chosen])
