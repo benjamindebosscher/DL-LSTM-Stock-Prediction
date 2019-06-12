@@ -63,8 +63,8 @@ dropout = 0.2                   # Dropout amount
 
 # Define number of days to predict for in the future
 #n_predict_once = 10
-#n_predict_once = 25
-n_predict_once = 75
+n_predict_once = 25
+#n_predict_once = 50
 #n_predict_once = 100
 #n_predict_once = 200
 
