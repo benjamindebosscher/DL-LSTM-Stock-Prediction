@@ -23,7 +23,7 @@ Epoch nr 17, average loss= 0.13038, MSE= 0.01672
 Epoch nr 18, average loss= 0.12753, MSE= 0.01980
 Epoch nr 19, average loss= 0.12943, MSE= 0.02038
 Epoch nr 20, average loss= 0.12381, MSE= 0.02018
-Epoch nr 21, average loss= 0.12776, MSE= 0.01998
+Epoch nr 21, average loss= 0.12776, MSE= 0.01998`
 Epoch nr 22, average loss= 0.12476, MSE= 0.01999
 Epoch nr 23, average loss= 0.12004, MSE= 0.01990
 Epoch nr 24, average loss= 0.12134, MSE= 0.01950

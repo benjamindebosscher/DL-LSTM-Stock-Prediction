@@ -64,7 +64,7 @@ dropout = 0.2                   # Dropout amount
 # Define number of days to predict for in the future
 #n_predict_once = 10
 #n_predict_once = 25
-n_predict_once = 50
+n_predict_once = 75
 #n_predict_once = 100
 #n_predict_once = 200
 
@@ -75,7 +75,7 @@ x_axis_seq, predictions_over_time, run_data, KPI = LSTM(pp_data, D, num_unrollin
 # Saving the results and finding the best epoch
 # =============================================================================
 
-best_prediction_epoch = PerformanceSaver(pp_data_price, run_data, n_predict_once, num_unrollings, batch_size)
+best_prediction_epoch = PerformanceSaver(pp_data_price, run_data, KPI, n_predict_once, num_unrollings, batch_size)
 
 # =============================================================================
 # Visualisation of the results
