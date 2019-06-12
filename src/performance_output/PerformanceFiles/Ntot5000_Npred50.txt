@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 maxae
 Best prediction epoch: 2 with MSE 0.0119, MRE 0.1152
 Epoch nr 1 0, MSE= 0.21718
@@ -30,3 +31,40 @@ Epoch nr 27 0, MSE= 0.01407
 Epoch nr 28 0, MSE= 0.01409
 Epoch nr 29 0, MSE= 0.01408
 Epoch nr 30 0, MSE= 0.01409
+=======
+Train data size =5000
+Num_unrolling = 50
+batch_size = 500
+n_predict_once = 50
+Best prediction epoch: 5 with MSE 0.0093
+Epoch nr 1, average loss= 0, MSE= 0.30132
+Epoch nr 2, average loss= 0, MSE= 0.01378
+Epoch nr 3, average loss= 0, MSE= 0.05552
+Epoch nr 4, average loss= 0, MSE= 0.03543
+Epoch nr 5, average loss= 0, MSE= 0.00932
+Epoch nr 6, average loss= 0, MSE= 0.01035
+Epoch nr 7, average loss= 0, MSE= 0.01862
+Epoch nr 8, average loss= 0, MSE= 0.01339
+Epoch nr 9, average loss= 0, MSE= 0.01372
+Epoch nr 10, average loss= 0, MSE= 0.01538
+Epoch nr 11, average loss= 0, MSE= 0.01357
+Epoch nr 12, average loss= 0, MSE= 0.01471
+Epoch nr 13, average loss= 0, MSE= 0.01439
+Epoch nr 14, average loss= 0, MSE= 0.01463
+Epoch nr 15, average loss= 0, MSE= 0.01407
+Epoch nr 16, average loss= 0, MSE= 0.01310
+Epoch nr 17, average loss= 0, MSE= 0.01303
+Epoch nr 18, average loss= 0, MSE= 0.01241
+Epoch nr 19, average loss= 0, MSE= 0.01254
+Epoch nr 20, average loss= 0, MSE= 0.01358
+Epoch nr 21, average loss= 0, MSE= 0.01345
+Epoch nr 22, average loss= 0, MSE= 0.01316
+Epoch nr 23, average loss= 0, MSE= 0.01320
+Epoch nr 24, average loss= 0, MSE= 0.01330
+Epoch nr 25, average loss= 0, MSE= 0.01344
+Epoch nr 26, average loss= 0, MSE= 0.01341
+Epoch nr 27, average loss= 0, MSE= 0.01350
+Epoch nr 28, average loss= 0, MSE= 0.01340
+Epoch nr 29, average loss= 0, MSE= 0.01338
+Epoch nr 30, average loss= 0, MSE= 0.01348
+>>>>>>> 6f4cfeae54bcf3f0a76c09db55a497b8810f64f1
