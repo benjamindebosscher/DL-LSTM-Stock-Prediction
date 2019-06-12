@@ -47,7 +47,8 @@ pp_data.insert(0, pp_data_price)
 pp_data.insert(1, pp_data_volume)
 
 if remove_data!=0: # Removing data points! Or not! This if statement will know.
-	pp_data.limitdata(remove_data)
+	for data in pp_data:
+		data.limitdata(remove_data)
 
 # =============================================================================
 # Define and apply LSTM
@@ -63,8 +64,8 @@ dropout = 0.2                   # Dropout amount
 
 # Define number of days to predict for in the future
 #n_predict_once = 10
-n_predict_once = 25
-#n_predict_once = 50
+#n_predict_once = 25
+n_predict_once = 50
 #n_predict_once = 100
 #n_predict_once = 200
 

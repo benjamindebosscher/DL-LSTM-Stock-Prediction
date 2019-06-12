@@ -74,7 +74,7 @@ def PerformanceSaver(data_obj, run_data, KPI,  n_predict_once, num_unrollings, b
 	for h in headers:
 		data_temp[h] = KPI[h][ind_chosen]
 	data_toadd = pd.DataFrame(data_temp, index = [0])
-	data_all = pd.concat([data_saver, data_toadd], ignore_index = True, sort = False)
+	data_all = pd.concat([data_saver, data_toadd], ignore_index = True)
 #	data_all = pd.concat([data_saver, data_toadd], ignore_index = True)
 	data_all.to_csv('src/performance_output/PerformanceFiles/All_results.csv', index = False)
 	print('Best prediction epoch: ', ind_chosen, ' with KPI: ')

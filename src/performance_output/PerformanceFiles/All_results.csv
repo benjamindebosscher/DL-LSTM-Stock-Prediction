@@ -1,5 +1,9 @@
-,Date,Best epoch,From KPI:,Data size,Num_unrolling,Batch_size,n_predict_once,mse,lincor,mre,rmse,mae,maxae
-0,Wed Jun 12 11:12:47 2019,4,"mse, mre, rmse, mae, maxae",5000,50,500,25,0.0094,1.0272,0.1172,0.0859,0.109,5.4483
-1,Wed Jun 12 11:14:21 2019,4,"mse, mre, rmse, mae, maxae",5000,50,500,25,0.0094,1.0272,0.1172,0.0859,0.109,5.4483
-2,Wed Jun 12 11:14:30 2019,4,"mse, mre, rmse, mae, maxae",5000,50,500,25,0.0094,1.0272,0.1172,0.0859,0.109,5.4483
-3,Wed Jun 12 11:17:31 2019,4,"mse, mre, rmse, mae, maxae",5000,50,500,25,0.0094,1.0272,0.1172,0.0859,0.109,5.4483
+Date,Best epoch,From KPI:,Data size,Num_unrolling,Batch_size,n_predict_once,mse,lincor,mre,rmse,mae,maxae
+Wed Jun 12 11:14:30 2019,4,"mse, mre, rmse, mae, maxae",5000,50,500,25,0.0094,1.0272,0.1172,0.0859,0.109,5.4483
+Wed Jun 12 11:31:58 2019,5,"mse, mre, rmse, mae, maxae",5000,50,500,25,0.0105,1.6644,0.1125,0.0887,0.1145,5.7273
+Wed Jun 12 11:37:38 2019,5,"mse, mre, rmse, mae, maxae",5000,50,500,10,0.0095,2.1042,0.1105,0.0862,0.1107,5.5326
+Wed Jun 12 11:45:20 2019,4,"mse, mre, rmse, mae, maxae",5000,50,500,100,0.0085,1.743,0.1094,0.0831,0.107,5.3522
+Wed Jun 12 11:51:09 2019,4,"mse, mre, rmse, mae, maxae",5000,50,500,200,0.0103,1.5827,0.1119,0.0881,0.1136,5.6778
+Wed Jun 12 11:57:01 2019,4,"mse, mre, rmse, mae, maxae",5000,50,500,50,0.0105,1.3802,0.1122,0.0877,0.1134,5.6722
+Wed Jun 12 12:16:10 2019,6,"mse, mre, rmse, mae, maxae",4000,50,500,50,0.0088,1.734,0.1093,0.0829,0.1068,5.3383
+Wed Jun 12 12:27:39 2019,3,"mse, mre, rmse, mae, maxae",2000,50,500,50,0.0131,1.0654,0.1263,0.0951,0.1227,6.1347

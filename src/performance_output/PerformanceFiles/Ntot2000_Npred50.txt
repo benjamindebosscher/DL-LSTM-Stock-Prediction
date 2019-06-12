@@ -1,35 +1,32 @@
-Train data size =2000
-Num_unrolling = 50
-batch_size = 500
-n_predict_once = 50
-Best prediction epoch: 9 with MSE 0.0103
-Epoch nr 1, average loss= 3.94695, MSE= 0.40861
-Epoch nr 2, average loss= 1.86520, MSE= 0.24851
-Epoch nr 3, average loss= 0.62230, MSE= 0.01493
-Epoch nr 4, average loss= 0.52085, MSE= 0.05591
-Epoch nr 5, average loss= 0.63316, MSE= 0.01600
-Epoch nr 6, average loss= 0.24245, MSE= 0.09638
-Epoch nr 7, average loss= 0.27802, MSE= 0.07175
-Epoch nr 8, average loss= 0.18988, MSE= 0.01954
-Epoch nr 9, average loss= 0.20783, MSE= 0.01035
-Epoch nr 10, average loss= 0.22803, MSE= 0.01570
-Epoch nr 11, average loss= 0.16086, MSE= 0.04436
-Epoch nr 12, average loss= 0.15688, MSE= 0.05477
-Epoch nr 13, average loss= 0.16080, MSE= 0.03976
-Epoch nr 14, average loss= 0.14000, MSE= 0.02127
-Epoch nr 15, average loss= 0.13957, MSE= 0.01356
-Epoch nr 16, average loss= 0.13444, MSE= 0.01398
-Epoch nr 17, average loss= 0.13038, MSE= 0.01672
-Epoch nr 18, average loss= 0.12753, MSE= 0.01980
-Epoch nr 19, average loss= 0.12943, MSE= 0.02038
-Epoch nr 20, average loss= 0.12381, MSE= 0.02018
-Epoch nr 21, average loss= 0.12776, MSE= 0.01998`
-Epoch nr 22, average loss= 0.12476, MSE= 0.01999
-Epoch nr 23, average loss= 0.12004, MSE= 0.01990
-Epoch nr 24, average loss= 0.12134, MSE= 0.01950
-Epoch nr 25, average loss= 0.12120, MSE= 0.01915
-Epoch nr 26, average loss= 0.12945, MSE= 0.01882
-Epoch nr 27, average loss= 0.11907, MSE= 0.01842
-Epoch nr 28, average loss= 0.12178, MSE= 0.01813
-Epoch nr 29, average loss= 0.12457, MSE= 0.01783
-Epoch nr 30, average loss= 0.12717, MSE= 0.01760
+maxae
+Best prediction epoch: 4 with MSE 0.0131, MRE 0.1263
+Epoch nr 1 0, MSE= 0.46101
+Epoch nr 2 0, MSE= 0.36974
+Epoch nr 3 0, MSE= 0.20154
+Epoch nr 4 0, MSE= 0.01313
+Epoch nr 5 0, MSE= 0.01890
+Epoch nr 6 0, MSE= 0.04415
+Epoch nr 7 0, MSE= 0.10723
+Epoch nr 8 0, MSE= 0.08444
+Epoch nr 9 0, MSE= 0.03850
+Epoch nr 10 0, MSE= 0.01903
+Epoch nr 11 0, MSE= 0.02168
+Epoch nr 12 0, MSE= 0.03288
+Epoch nr 13 0, MSE= 0.04514
+Epoch nr 14 0, MSE= 0.04755
+Epoch nr 15 0, MSE= 0.04620
+Epoch nr 16 0, MSE= 0.04231
+Epoch nr 17 0, MSE= 0.03946
+Epoch nr 18 0, MSE= 0.03568
+Epoch nr 19 0, MSE= 0.03170
+Epoch nr 20 0, MSE= 0.03006
+Epoch nr 21 0, MSE= 0.02906
+Epoch nr 22 0, MSE= 0.02861
+Epoch nr 23 0, MSE= 0.02846
+Epoch nr 24 0, MSE= 0.02829
+Epoch nr 25 0, MSE= 0.02818
+Epoch nr 26 0, MSE= 0.02814
+Epoch nr 27 0, MSE= 0.02803
+Epoch nr 28 0, MSE= 0.02779
+Epoch nr 29 0, MSE= 0.02758
+Epoch nr 30 0, MSE= 0.02745
