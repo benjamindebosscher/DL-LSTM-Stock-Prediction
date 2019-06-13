@@ -33,9 +33,18 @@ for i in range(num_stocks):
     data_frac = 0.8
     
     # Preprocessing data
-    
-    split_datapoint =  int(data_frac * df.shape[0])            # 5000 for PHIA
-    smoothing_window_size = 1000        # 1000 for PHIA
+# =============================================================================
+#     while True:
+#         if (data_frac * df.shape[0]).is_integer() == True:
+#             break
+#         else:
+#             
+# =============================================================================
+    #split in test and train data and round to nearest 1000
+    split_datapoint = round(int(data_frac * df.shape[0]), -2)        # 5000 for PHIA
+        
+        
+    smoothing_window_size = 1000      # 1000 for PHIA
     # Number of data points to remove. Uncomment one option to remove the first N training data points
     remove_data = 0
     #remove_data = 1000

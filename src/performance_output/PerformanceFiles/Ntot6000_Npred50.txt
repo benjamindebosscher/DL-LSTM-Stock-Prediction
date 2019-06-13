@@ -1,0 +1,4 @@
+maxae
+Best prediction epoch: 2 with MSE 0.0144, MRE 0.2024
+Epoch nr 1 0, MSE= 0.14006
+Epoch nr 2 0, MSE= 0.01441
