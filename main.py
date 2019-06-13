@@ -22,29 +22,24 @@ data_source = 'git'
 market = 'AEX' # 'AEX'
 stocks = get_data(data_source, market)
 
-stock_list = ['PHIA', 'REN']
+stock_list = ['PHIA', 'REN', 'KPN']
 num_stocks = 2
 
 for i in range(num_stocks):
     # ONLY FOR NOW, SHOULD BE CHANGED!!
     df = stocks[stock_list[i]]
+    #df = df[:800]
     
     # fraction of training data/total data
     data_frac = 0.8
     
     # Preprocessing data
-# =============================================================================
-#     while True:
-#         if (data_frac * df.shape[0]).is_integer() == True:
-#             break
-#         else:
-#             
-# =============================================================================
-    #split in test and train data and round to nearest 1000
-    split_datapoint = round(int(data_frac * df.shape[0]), -2)        # 5000 for PHIA
+    #split in test and train data and round to nearest 10
+    split_datapoint = int(data_frac * df.shape[0])  
+    split_datapoint = int(round(split_datapoint / 100.0) * 100.0)  # 5000 for PHIA
         
         
-    smoothing_window_size = 1000      # 1000 for PHIA
+    smoothing_window_size = 100   # 1000 for PHIA
     # Number of data points to remove. Uncomment one option to remove the first N training data points
     remove_data = 0
     #remove_data = 1000

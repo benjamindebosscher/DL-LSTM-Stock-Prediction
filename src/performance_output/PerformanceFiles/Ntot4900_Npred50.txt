@@ -1,0 +1,32 @@
+maxae
+Best prediction epoch: 5 with MSE 0.0082, MRE 0.1124
+Epoch nr 1 0, MSE= 0.19907
+Epoch nr 2 0, MSE= 0.01380
+Epoch nr 3 0, MSE= 0.07582
+Epoch nr 4 0, MSE= 0.03092
+Epoch nr 5 0, MSE= 0.00822
+Epoch nr 6 0, MSE= 0.00847
+Epoch nr 7 0, MSE= 0.00857
+Epoch nr 8 0, MSE= 0.01005
+Epoch nr 9 0, MSE= 0.01045
+Epoch nr 10 0, MSE= 0.00986
+Epoch nr 11 0, MSE= 0.01128
+Epoch nr 12 0, MSE= 0.01063
+Epoch nr 13 0, MSE= 0.00986
+Epoch nr 14 0, MSE= 0.01115
+Epoch nr 15 0, MSE= 0.01047
+Epoch nr 16 0, MSE= 0.00991
+Epoch nr 17 0, MSE= 0.01019
+Epoch nr 18 0, MSE= 0.01038
+Epoch nr 19 0, MSE= 0.01029
+Epoch nr 20 0, MSE= 0.01007
+Epoch nr 21 0, MSE= 0.01016
+Epoch nr 22 0, MSE= 0.01038
+Epoch nr 23 0, MSE= 0.01021
+Epoch nr 24 0, MSE= 0.01010
+Epoch nr 25 0, MSE= 0.00999
+Epoch nr 26 0, MSE= 0.01002
+Epoch nr 27 0, MSE= 0.01002
+Epoch nr 28 0, MSE= 0.00998
+Epoch nr 29 0, MSE= 0.01001
+Epoch nr 30 0, MSE= 0.01008
