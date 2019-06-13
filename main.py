@@ -22,16 +22,12 @@ data_source = 'git'
 market = 'NYSE' # 'AEX'
 stocks = get_data(data_source, market)
 
-## ibm edit
-#df = pd.read_fwf('log.txt')
-#df.to_csv('log.csv')
-
 # ONLY FOR NOW, SHOULD BE CHANGED!!
 df = stocks['IBM']
 
 # Preprocessing data
-split_datapoint = 5000
-smoothing_window_size = 1000
+split_datapoint = 11000             # 5000 for PHIA
+smoothing_window_size = 2500        # 1000 for PHIA
 # Number of data points to remove. Uncomment one option to remove the first N training data points
 remove_data = 0
 #remove_data = 1000
@@ -51,8 +47,7 @@ pp_data.insert(0, pp_data_price)
 pp_data.insert(1, pp_data_volume)
 
 if remove_data!=0: # Removing data points! Or not! This if statement will know.
-	for data in pp_data:
-		data.limitdata(remove_data)
+	pp_data.limitdata(remove_data)
 
 # =============================================================================
 # Define and apply LSTM
@@ -80,7 +75,7 @@ x_axis_seq, predictions_over_time, run_data, KPI = LSTM(pp_data, D, num_unrollin
 # Saving the results and finding the best epoch
 # =============================================================================
 
-best_prediction_epoch = PerformanceSaver(pp_data_price, run_data, KPI, n_predict_once, num_unrollings, batch_size)
+best_prediction_epoch = PerformanceSaver(pp_data_price, run_data, n_predict_once, num_unrollings, batch_size)
 
 # =============================================================================
 # Visualisation of the results
