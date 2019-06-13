@@ -131,7 +131,7 @@ def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n
 
     print('\tAll done')
 
-    epochs = 30
+    epochs = 8
     valid_summary = 1 # Interval you make test predictions
 
     n_predict_once = 50 # Number of steps you continously predict for
@@ -152,8 +152,7 @@ def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n
     tf.global_variables_initializer().run()
 
     # Add ops to save and restore all the variables.
-    saver = tf.train.Saver()
-    tf.train.Saver(max_to_keep=100000) 
+    saver = tf.train.Saver(max_to_keep=100000)
     
     if stock_number > 1:
         saver.restore(session, r"C:\Users\owner\Documents\LSTM\model_epoch%d.ckpt" % best_prediction_epoch)
