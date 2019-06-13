@@ -51,7 +51,8 @@ pp_data.insert(0, pp_data_price)
 pp_data.insert(1, pp_data_volume)
 
 if remove_data!=0: # Removing data points! Or not! This if statement will know.
-	pp_data.limitdata(remove_data)
+	for data in pp_data:
+		data.limitdata(remove_data)
 
 # =============================================================================
 # Define and apply LSTM
@@ -79,7 +80,7 @@ x_axis_seq, predictions_over_time, run_data, KPI = LSTM(pp_data, D, num_unrollin
 # Saving the results and finding the best epoch
 # =============================================================================
 
-best_prediction_epoch = PerformanceSaver(pp_data_price, run_data, n_predict_once, num_unrollings, batch_size)
+best_prediction_epoch = PerformanceSaver(pp_data_price, run_data, KPI, n_predict_once, num_unrollings, batch_size)
 
 # =============================================================================
 # Visualisation of the results

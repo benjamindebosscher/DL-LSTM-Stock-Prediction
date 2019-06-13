@@ -225,15 +225,16 @@ def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n
           maxae_test_loss_seq = []
           # ============================ Saving the average loss ==============================
 
-          data_for_output_temp = data_for_output_temp + ', average loss= ' +  str(average_loss)[:7]
+          data_for_output_temp = data_for_output_temp + ' ' + str(average_loss)[:7]
+
 
           # ===================== Updating State and Making Predicitons ========================
-          for w_i in test_points_seq:
-            mse_test_loss = 0.0
-            mre_test_loss = 0.0
-            mae_test_loss = 0.0
-            ae_test_loss = []
-            rmse_test_loss = 0.0 
+          for w_i in test_points_seq: 	### Performance indicators
+            mse_test_loss = 0.0 # mean squared error
+            mre_test_loss = 0.0 # mean relative error
+            mae_test_loss = 0.0 # Maximum absolute error
+            ae_test_loss = [] # Mean absolute error
+            rmse_test_loss = 0.0  # Root mean square error (predicted vs actual)
             mid_data = []
             our_predictions = []
 
@@ -326,21 +327,26 @@ def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n
                 session.run(inc_gstep)
                 loss_nondecrease_count = 0
                 print('\tDecreasing learning rate by 0.5')
-
-
-          test_mse_ot.append(current_test_mse)
-          test_lincor_ot.append(current_lincor)  
-          test_mre_ot.append(current_test_mre)
-          test_rmse_ot.append(current_test_rmse)
-          test_mae_ot.append(current_test_mae)
-          test_maxae_ot.append(current_test_maxae)
+          test_mse_ot.append(float(format(current_test_mse, '7.4f'))) ### KP: Changed format to save fewer decimals
+#          test_lincor_ot.append(current_lincor)  
+#          test_mre_ot.append(current_test_mre)
+#          test_rmse_ot.append(current_test_rmse)
+#          test_mae_ot.append(current_test_mae)
+#          test_maxae_ot.append(current_test_maxae)
+#          test_mse_ot.append(format(current_test_mse, '7.2f'))
+          test_lincor_ot.append(float(format(current_lincor, '7.4f')))  
+          test_mre_ot.append(float(format(current_test_mre, '7.4f')))
+          test_rmse_ot.append(float(format(current_test_rmse, '7.4f')))
+          test_mae_ot.append(float(format(current_test_mae, '7.4f')))
+          test_maxae_ot.append(float(format(current_test_maxae, '7.4f')))
           data_for_output_temp = data_for_output_temp + ', MSE= ' + str(np.mean(mse_test_loss_seq))[:7]
-          test_mse_ot.append(current_test_mse)
+#          test_mse_ot.append(current_test_mse) Commented out by Kipras. Operation already done above!
           print('\tTest MSE: %.5f'%np.mean(mse_test_loss_seq))
           predictions_over_time.append(predictions_seq)
           print('\tFinished Predictions')
           data_for_output_perm = np.vstack((data_for_output_perm, data_for_output_temp))
           
           KPI = {'mse':test_mse_ot, 'lincor':test_lincor_ot, 'mre':test_mre_ot, 'rmse': test_rmse_ot,'mae':test_mae_ot, 'maxae':test_maxae_ot}
+#          KPI = {'Mean Squared Error':test_mse_ot, 'lincor':test_lincor_ot, 'Mean Relative Error':test_mre_ot, 'Root mean squared error': test_rmse_ot,'Mean Absolute Error':test_mae_ot, 'Max Absolute Error':test_maxae_ot}
 
     return x_axis_seq, predictions_over_time, data_for_output_perm, KPI
