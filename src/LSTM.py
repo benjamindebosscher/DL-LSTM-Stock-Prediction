@@ -62,9 +62,9 @@ def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n
     all_lstm_outputs, state = tf.nn.dynamic_rnn(
         drop_multi_cell, all_inputs, initial_state=tuple(initial_state),
         time_major=True, dtype=tf.float32)
-    
+
     all_lstm_outputs = tf.reshape(all_lstm_outputs, [batch_size*num_unrollings, num_nodes[-1]])
-    
+
     #all_outputs is output of regression layer
     all_outputs = tf.nn.xw_plus_b(all_lstm_outputs, w, b)
     print(all_outputs.get_shape())
@@ -123,7 +123,7 @@ def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n
                                                      initial_state=tuple(initial_sample_state),
                                                      time_major=True,
                                                      dtype=tf.float32)
-  
+
 
     with tf.control_dependencies([tf.assign(sample_c[li], sample_state[li][0]) for li in range(n_layers)]+
                                  [tf.assign(sample_h[li], sample_state[li][1]) for li in range(n_layers)]):
@@ -131,7 +131,7 @@ def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n
 
     print('\tAll done')
 
-    epochs = 8
+    epochs = 30
     valid_summary = 1 # Interval you make test predictions
 
     n_predict_once = 50 # Number of steps you continously predict for
@@ -153,11 +153,11 @@ def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n
 
     # Add ops to save and restore all the variables.
     saver = tf.train.Saver(max_to_keep=100000)
-    
+
     if stock_number > 1:
-        saver.restore(session, r"C:\Users\owner\Documents\LSTM\model_epoch%d.ckpt" % best_prediction_epoch)
+        saver.restore(session, r"C:\Users\Jeff\Downloads\test_dl\model_epoch%d.ckpt" % best_prediction_epoch)
         print("Model restored.")
-    
+
     # Used for decaying learning rate
     loss_nondecrease_count = 0
     loss_nondecrease_threshold = 2 # If the test error hasn't increased in this many steps, decrease learning rate
@@ -181,7 +181,7 @@ def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n
     for ep in range(epochs):
 
         data_for_output_temp = 'Epoch nr ' + str(ep+1)
-        
+
         # ========================= Training =====================================
         #https://jonlabelle.com/snippets/view/markdown/python-enumerate-and-zip
         #https://machinelearningmastery.com/how-to-develop-lstm-models-for-time-series-forecasting/
@@ -189,11 +189,11 @@ def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n
 
             u_data_prices, u_labels_prices = data_gen_prices.unroll_batches()
             u_data_volume, u_labels_volume = data_gen_volume.unroll_batches()
-            
+
             u_data = np.zeros([num_unrollings, batch_size, 2])
             u_data[0:,0:,0] = u_data_prices
             u_data[0:,0:,1] = u_data_volume
-            
+
             u_labels = np.zeros([num_unrollings, batch_size, 2])
             u_labels[0:,0:,0] = u_labels_prices
             u_labels[0:,0:,1] = u_labels_volume
@@ -270,10 +270,10 @@ def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n
 
               pred = session.run(sample_prediction, feed_dict=feed_dict)
               pred.reshape(-1,1)
-              
+
               our_predictions.append(np.asscalar(pred[0][0]))
               mid_data.append(pp_data[0].all_mid_data[w_i + pred_i])
-              
+
               #add function that predict volume input!!!!
 
               feed_dict[sample_inputs] = np.asarray([pred[0][0], pred[0][1]]).reshape(1, 2)
@@ -291,39 +291,39 @@ def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n
             session.run(reset_sample_states)
 
             predictions_seq.append(np.array(our_predictions))
-            
+
             cov = np.cov(our_predictions,mid_data)
             var_pred = np.var(our_predictions)
             var_mid_data = np.var(mid_data)
             lincor = cov/(math.sqrt(var_pred*var_mid_data))
-            
-            
+
+
             mse_test_loss /= n_predict_once
             mre_test_loss /= n_predict_once
             mae_test_loss /= n_predict_once
             maxae_test_loss = max(ae_test_loss)
             rmse_test_loss = math.sqrt(mse_test_loss)
-            
+
             lincor_seq.append(lincor)
             mre_test_loss_seq.append(mre_test_loss)
             mae_test_loss_seq.append(mae_test_loss)
             rmse_test_loss_seq.append(rmse_test_loss)
             maxae_test_loss_seq.append(maxae_test_loss)
-            
+
             mse_test_loss_seq.append(mse_test_loss)
-            
+
 
             if (ep+1)-valid_summary == 0:
               x_axis_seq.append(x_axis)
 
           current_test_mse = np.mean(mse_test_loss_seq)
-          current_lincor = np.mean(lincor_seq)   
+          current_lincor = np.mean(lincor_seq)
           current_test_mse = np.mean(mse_test_loss_seq)
           current_test_mre = np.mean(mre_test_loss_seq)
           current_test_mae = np.mean(mae_test_loss_seq)
           current_test_rmse = np.mean(rmse_test_loss_seq) #CHANGED
           current_test_maxae = np.mean(maxae_test_loss_seq)
-          
+
           # Learning rate decay logic
           if len(test_mse_ot) > 0 and current_test_mse > min(test_mse_ot):
               loss_nondecrease_count += 1
@@ -335,13 +335,13 @@ def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n
                 loss_nondecrease_count = 0
                 print('\tDecreasing learning rate by 0.5')
           test_mse_ot.append(float(format(current_test_mse, '7.4f'))) ### KP: Changed format to save fewer decimals
-#          test_lincor_ot.append(current_lincor)  
+#          test_lincor_ot.append(current_lincor)
 #          test_mre_ot.append(current_test_mre)
 #          test_rmse_ot.append(current_test_rmse)
 #          test_mae_ot.append(current_test_mae)
 #          test_maxae_ot.append(current_test_maxae)
 #          test_mse_ot.append(format(current_test_mse, '7.2f'))
-          test_lincor_ot.append(float(format(current_lincor, '7.4f')))  
+          test_lincor_ot.append(float(format(current_lincor, '7.4f')))
           test_mre_ot.append(float(format(current_test_mre, '7.4f')))
           test_rmse_ot.append(float(format(current_test_rmse, '7.4f')))
           test_mae_ot.append(float(format(current_test_mae, '7.4f')))
@@ -352,10 +352,10 @@ def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n
           predictions_over_time.append(predictions_seq)
           print('\tFinished Predictions')
           data_for_output_perm = np.vstack((data_for_output_perm, data_for_output_temp))
-          
+
           KPI = {'mse':test_mse_ot, 'lincor':test_lincor_ot, 'mre':test_mre_ot, 'rmse': test_rmse_ot,'mae':test_mae_ot, 'maxae':test_maxae_ot}
 #         KPI = {'Mean Squared Error':test_mse_ot, 'lincor':test_lincor_ot, 'Mean Relative Error':test_mre_ot, 'Root mean squared error': test_rmse_ot,'Mean Absolute Error':test_mae_ot, 'Max Absolute Error':test_maxae_ot}
           # Save the variables to disk.
-          save_path = saver.save(session, r"C:\Users\owner\Documents\LSTM\model_epoch%d.ckpt" % ep)
+          save_path = saver.save(session, r"C:\Users\Jeff\Downloads\test_dl\model_epoch%d.ckpt" % ep)
           print("Model saved in path: %s" % save_path)
     return x_axis_seq, predictions_over_time, data_for_output_perm, KPI
