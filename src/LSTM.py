@@ -13,7 +13,7 @@ import numpy as np
 import math
 from src.data_operations.augmentation import DataGeneratorSeq
 
-def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n_predict_once):
+def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n_predict_once, stock_number, best_prediction_epoch):
     '''LSTM definition
             TO BE COMPLETED
     '''
@@ -131,7 +131,7 @@ def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n
 
     print('\tAll done')
 
-    epochs = 30
+    epochs = 2
     valid_summary = 1 # Interval you make test predictions
 
     n_predict_once = 50 # Number of steps you continously predict for
@@ -151,6 +151,13 @@ def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n
 
     tf.global_variables_initializer().run()
 
+    # Add ops to save and restore all the variables.
+    saver = tf.train.Saver()
+    
+    if stock_number > 1:
+        saver.restore(session, r"C:\Users\owner\Documents\LSTM\model_epoch%d.ckpt" % best_prediction_epoch)
+        print("Model restored.")
+    
     # Used for decaying learning rate
     loss_nondecrease_count = 0
     loss_nondecrease_threshold = 2 # If the test error hasn't increased in this many steps, decrease learning rate
@@ -347,6 +354,8 @@ def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n
           data_for_output_perm = np.vstack((data_for_output_perm, data_for_output_temp))
           
           KPI = {'mse':test_mse_ot, 'lincor':test_lincor_ot, 'mre':test_mre_ot, 'rmse': test_rmse_ot,'mae':test_mae_ot, 'maxae':test_maxae_ot}
-#          KPI = {'Mean Squared Error':test_mse_ot, 'lincor':test_lincor_ot, 'Mean Relative Error':test_mre_ot, 'Root mean squared error': test_rmse_ot,'Mean Absolute Error':test_mae_ot, 'Max Absolute Error':test_maxae_ot}
-
+#         KPI = {'Mean Squared Error':test_mse_ot, 'lincor':test_lincor_ot, 'Mean Relative Error':test_mre_ot, 'Root mean squared error': test_rmse_ot,'Mean Absolute Error':test_mae_ot, 'Max Absolute Error':test_maxae_ot}
+          # Save the variables to disk.
+          save_path = saver.save(session, r"C:\Users\owner\Documents\LSTM\model_epoch%d.ckpt" % ep)
+          print("Model saved in path: %s" % save_path)
     return x_axis_seq, predictions_over_time, data_for_output_perm, KPI
