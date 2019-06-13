@@ -19,20 +19,24 @@ from src.performance_output.txt_saver import PerformanceSaver
 
 # Import data
 data_source = 'git'
-market = 'AEX'
+market = 'NYSE' # 'AEX'
 stocks = get_data(data_source, market)
 
+## ibm edit
+#df = pd.read_fwf('log.txt')
+#df.to_csv('log.csv')
+
 # ONLY FOR NOW, SHOULD BE CHANGED!!
-df = stocks['PHIA']
+df = stocks['IBM']
 
 # Preprocessing data
 split_datapoint = 5000
 smoothing_window_size = 1000
 # Number of data points to remove. Uncomment one option to remove the first N training data points
-remove_data = 0 
-#remove_data = 1000 
-#remove_data = 3000 
-#remove_data = 4000 
+remove_data = 0
+#remove_data = 1000
+#remove_data = 3000
+#remove_data = 4000
 
 pp_data_price = PreProc(df, "Prices")
 pp_data_price.splitdata(split_datapoint)

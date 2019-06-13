@@ -30,5 +30,19 @@ def get_data(data_source, market):
             return stocks
         else:
             raise ValueError('This source does not exist. Only git is an option.')
+
+    elif market == 'NYSE':
+        if data_source == 'git':
+            files = os.listdir('data/'+market)
+            for file in files:
+                df = pd.read_csv('data/'+market+'/'+file, \
+                      delimiter=',', usecols=['Date', 'Open', 'High', 'Low', 'Volume'])
+                df = df.sort_values('Date')
+                stocks[file[:-4]] = df
+            print('Loaded data from the GitHub repository')
+            return stocks
+        else:
+            raise ValueError('This source does not exist. Only git is an option.')
+
     else:
         raise ValueError('This market does not exist. Only AEX is an option.')
