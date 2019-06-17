@@ -11,7 +11,6 @@ from src.data_operations.import_as_dict_backup import get_data
 from src.data_operations.preprocessing_backup import PreProc
 from src.LSTM_backup import LSTM
 from src.makeplots_backup import prediction
-from src.performance_output.txt_saver import PerformanceSaver
 
 # =============================================================================
 # Preprocessing
@@ -23,7 +22,7 @@ market = 'AEX'
 stocks = get_data(data_source, market)
 
 # ONLY FOR NOW, SHOULD BE CHANGED!!
-df = stocks['PHIA']
+df = stocks['URW']
 
 # Preprocessing data
 split_datapoint = 5000         #5000 for PHIA
@@ -48,7 +47,7 @@ dropout = 0.2                   # Dropout amount
 n_predict_once = 50
 
 # Run LSTM
-x_axis_seq, predictions_over_time = LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout)
+x_axis_seq, predictions_over_time, KPI = LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout)
 
 # =============================================================================
 # Visualisation of the results
