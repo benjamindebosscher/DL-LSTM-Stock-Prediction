@@ -131,10 +131,10 @@ def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n
 
     print('\tAll done')
 
-    epochs = 8
+    epochs = 12
     valid_summary = 1 # Interval you make test predictions
 
-    n_predict_once = 50 # Number of steps you continously predict for
+    #n_predict_once = 50 # Number of steps you continously predict for
 
     train_seq_length = pp_data[0].train_data.size # Full length of the training data
 
@@ -203,7 +203,7 @@ def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n
                 feed_dict[train_inputs[ui]] = dat.reshape(batch_size, D)
                 feed_dict[train_outputs[ui]] = lbl.reshape(batch_size, D)
 
-            feed_dict.update({tf_learning_rate: 0.0001, tf_min_learning_rate:0.000001})
+            feed_dict.update({tf_learning_rate: 0.001, tf_min_learning_rate:0.000001})
 
             _, l = session.run([optimizer, loss], feed_dict=feed_dict)
 

@@ -1,0 +1,14 @@
+maxae
+Best prediction epoch: 11 with MSE 0.0145, MRE 0.1172
+Epoch nr 1 0, MSE= 0.19731
+Epoch nr 2 0, MSE= 0.16311
+Epoch nr 3 0, MSE= 0.13321
+Epoch nr 4 0, MSE= 0.01895
+Epoch nr 5 0, MSE= 0.03584
+Epoch nr 6 0, MSE= 0.05204
+Epoch nr 7 0, MSE= 0.04549
+Epoch nr 8 0, MSE= 0.01931
+Epoch nr 9 0, MSE= 0.03127
+Epoch nr 10 0, MSE= 0.01716
+Epoch nr 11 0, MSE= 0.01472
+Epoch nr 12 0, MSE= 0.01451

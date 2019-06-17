@@ -23,7 +23,7 @@ market = 'AEX' # 'AEX'
 stocks = get_data(data_source, market)
 
 stock_list = ['PHIA', 'REN', 'KPN']
-num_stocks = 2
+num_stocks = 1
 
 for i in range(num_stocks):
     # ONLY FOR NOW, SHOULD BE CHANGED!!
@@ -34,12 +34,12 @@ for i in range(num_stocks):
     data_frac = 0.8
     
     # Preprocessing data
-    #split in test and train data and round to nearest 10
-    split_datapoint = int(data_frac * df.shape[0])  
-    split_datapoint = int(round(split_datapoint / 100.0) * 100.0)  # 5000 for PHIA
+    #split in test and train data and round to nearest 1000
+    #split_datapoint = int(data_frac * df.shape[0])  
+    #split_datapoint = int(round(split_datapoint / 2000.0) * 2000.0)  # 5000 for PHIA
+    split_datapoint = 5000   
         
-        
-    smoothing_window_size = 100   # 1000 for PHIA
+    smoothing_window_size = 1000   # 1000 for PHIA
     # Number of data points to remove. Uncomment one option to remove the first N training data points
     remove_data = 0
     #remove_data = 1000
@@ -67,7 +67,7 @@ for i in range(num_stocks):
     
     # Define hyperparameters
     D = 2                           # Dimensionality of the data. Since our data is 1-D this would be 1
-    num_unrollings = 50             # Number of time steps you look into the future. (also number of batches)
+    num_unrollings = 20            # Number of time steps you look into the future. (also number of batches)
     batch_size = 500                # Number of samples in a batch
     num_nodes = [200, 200, 150]     # Number of hidden nodes in each layer of the deep LSTM stack we're using
     n_layers = len(num_nodes)       # number of layers
@@ -76,7 +76,7 @@ for i in range(num_stocks):
     # Define number of days to predict for in the future
     #n_predict_once = 10
     #n_predict_once = 25
-    n_predict_once = 50
+    n_predict_once = 20
     #n_predict_once = 100
     #n_predict_once = 200
     
