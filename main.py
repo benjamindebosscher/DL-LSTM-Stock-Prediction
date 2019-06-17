@@ -13,6 +13,8 @@ from src.LSTM import LSTM
 from src.makeplots import prediction
 from src.performance_output.txt_saver import PerformanceSaver
 
+
+
 # =============================================================================
 # Preprocessing
 # =============================================================================
@@ -89,10 +91,13 @@ for i in range(num_stocks):
 # =============================================================================
 # Saving the results and finding the best epoch
 # =============================================================================
-
-best_prediction_epoch = PerformanceSaver(pp_data_price, run_data, KPI, n_predict_once, num_unrollings, batch_size)
+#%%
+    
+best_epoch_choice = 1 #0 if only MSE error on test data for all epochs is taken into account, 1 if MSE on last 5 epochs is taken into account
+best_prediction_epoch = PerformanceSaver(pp_data_price, run_data, KPI, n_predict_once, num_unrollings, batch_size, best_epoch_choice)
 # =============================================================================
 # Visualisation of the results
 # =============================================================================
+
 
 plot = prediction(df, pp_data, x_axis_seq, predictions_over_time, best_prediction_epoch)

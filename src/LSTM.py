@@ -157,7 +157,7 @@ def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n
     saver = tf.train.Saver(max_to_keep=100000)
 
     if stock_number > 1:
-        saver.restore(session, r"C:\Users\Jeff\Downloads\test_dl\model_epoch%d.ckpt" % best_prediction_epoch)
+        saver.restore(session, r"C:\Users\owner\Downloads\test_dl\model_epoch%d.ckpt" % best_prediction_epoch)
         print("Model restored.")
 
     # Used for decaying learning rate
@@ -358,6 +358,7 @@ def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n
           KPI = {'mse':test_mse_ot, 'lincor':test_lincor_ot, 'mre':test_mre_ot, 'rmse': test_rmse_ot,'mae':test_mae_ot, 'maxae':test_maxae_ot}
 #         KPI = {'Mean Squared Error':test_mse_ot, 'lincor':test_lincor_ot, 'Mean Relative Error':test_mre_ot, 'Root mean squared error': test_rmse_ot,'Mean Absolute Error':test_mae_ot, 'Max Absolute Error':test_maxae_ot}
           # Save the variables to disk.
-          save_path = saver.save(session, r"C:\Users\Jeff\Downloads\test_dl\model_epoch%d.ckpt" % ep)
+          save_path = saver.save(session, r"C:\Users\owner\Downloads\test_dl\model_epoch%d.ckpt" % ep)
           print("Model saved in path: %s" % save_path)
+          
     return x_axis_seq, predictions_over_time, data_for_output_perm, KPI
