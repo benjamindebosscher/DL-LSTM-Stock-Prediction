@@ -23,7 +23,7 @@ market = 'AEX'
 stocks = get_data(data_source, market)
 
 # ONLY FOR NOW, SHOULD BE CHANGED!!
-df = stocks['URW']
+df = stocks['PHIA']
 
 # Preprocessing data
 split_datapoint = 5000         #5000 for PHIA

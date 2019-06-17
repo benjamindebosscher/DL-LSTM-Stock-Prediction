@@ -6,12 +6,12 @@
                     Kipras Paliušis
         Based on a tutorial of Thushan Ganegedara (https://www.datacamp.com/community/tutorials/lstm-python-stock-market)
 '''
-
+import numpy as np
 from src.data_operations.import_as_dict import get_data
 from src.data_operations.preprocessing import PreProc
 from src.LSTM import LSTM
 from src.makeplots import prediction
-from src.performance_output.txt_saver import PerformanceSaver
+#from src.performance_output.txt_saver import PerformanceSaver
 
 # =============================================================================
 # Preprocessing
@@ -29,10 +29,10 @@ df = stocks['PHIA']
 split_datapoint = 5000      # must be integer multiple of smoothing_window_size
 smoothing_window_size = 1000 #must be integer multiple of n_predict_once/number_of_unrollings
 # Number of data points to remove. Uncomment one option to remove the first N training data points
-remove_data = 0 
-#remove_data = 1000 
-#remove_data = 3000 
-#remove_data = 4000 
+remove_data = 0
+#remove_data = 1000
+#remove_data = 3000
+#remove_data = 4000
 
 pp_data_price = PreProc(df, "Prices")
 pp_data_price.splitdata(split_datapoint)
@@ -76,14 +76,15 @@ x_axis_seq, predictions_over_time, run_data, KPI,  mid_data_over_time = LSTM(pp_
 # Saving the results and finding the best epoch
 # =============================================================================
 
-best_prediction_epoch = PerformanceSaver(pp_data_price, run_data, KPI, n_predict_once, num_unrollings, batch_size)
+#best_prediction_epoch = PerformanceSaver(pp_data_price, run_data, KPI, n_predict_once, num_unrollings, batch_size)
 
 # =============================================================================
 # Visualisation of the results
 # =============================================================================
 #%%
-best_prediction_epoch = 2;
+#best_prediction_epoch = np.where(KPI['correct'] == np.amax(KPI['correct']))
+best_prediction_epoch = 4
 plot = prediction(df, pp_data, x_axis_seq, predictions_over_time, best_prediction_epoch)
 
 
-    
+

@@ -44,33 +44,38 @@ def candlestick(df, sampledays='10D', plottitle=None):
     plt.show()
 
 def prediction(df, pp_data, x_axis_seq, predictions_over_time, best_prediction_epoch):
-    plt.figure(figsize = (18,18))
-    plt.subplot(2,1,1)
-    plt.plot(range(df.shape[0]),pp_data[0].all_mid_data,color='b')
-    
-    # Plotting how the predictions change over time
-    # Plot older predictions with low alpha and newer predictions with high alpha
-    start_alpha = 0.25
-    alpha  = np.arange(start_alpha,1.1,(1.0-start_alpha)/len(predictions_over_time[::3]))
-    for p_i,p in enumerate(predictions_over_time[::3]):
-        for xval,yval in zip(x_axis_seq,p):
-            plt.plot(xval,yval,color='r',alpha=alpha[p_i])
-    
-    plt.title('Evolution of Test Predictions Over Time',fontsize=16)
-    plt.xlabel('Date',fontsize=16)
-    plt.ylabel('Mid Price',fontsize=16)
-    plt.xlim(left=pp_data[0].split_datapoint)
-    
-    plt.subplot(2,1,2)
-    
+#    plt.figure(figsize = (18,18))
+#    plt.subplot(2,1,1)
+#    plt.plot(range(df.shape[0]),pp_data[0].all_mid_data,color='b')
+#
+#    # Plotting how the predictions change over time
+#    # Plot older predictions with low alpha and newer predictions with high alpha
+#    start_alpha = 0.25
+#    alpha  = np.arange(start_alpha,1.1,(1.0-start_alpha)/len(predictions_over_time[::3]))
+#    for p_i,p in enumerate(predictions_over_time[::3]):
+#        for xval,yval in zip(x_axis_seq,p):
+#            plt.plot(xval,yval,color='r',alpha=alpha[p_i])
+#
+#    plt.title('Evolution of Test Predictions Over Time',fontsize=16)
+#    plt.xlabel('Date',fontsize=16)
+#    plt.ylabel('Mid Price',fontsize=16)
+#    plt.xlim(left=pp_data[0].split_datapoint)
+#
+#    plt.subplot(2,1,2)
+
     # Predicting the best test prediction you got
-    plt.plot(range(df.shape[1]),pp_data[1].all_mid_data,color='b')
+    plt.plot(range(df.shape[0]),pp_data[0].all_mid_data,color='b')
     for xval,yval in zip(x_axis_seq,predictions_over_time[best_prediction_epoch]):
         plt.plot(xval,yval,color='r')
-        
-    plt.title('Best Test Predictions Over Time',fontsize=16)
-    plt.xlabel('Date',fontsize=16)
-    plt.ylabel('Mid Price',fontsize=16)
-    plt.xlim(left=pp_data[1].split_datapoint)
+
+    plt.title('Best Test Predictions Over Time',fontsize=30)
+    colors = [' blue', 'red', 'g']
+    labels = ['Normalised mid price','Prediction with volume', 'Prediction without volume']
+    plt.legend(labels, prop={'size': 15})
+
+    plt.xlabel('Datapoint [-]',fontsize=20)
+    plt.tick_params(labelsize=15)
+    plt.ylabel('Normalised Mid Price [-]',fontsize=20)
+    plt.xlim(left=pp_data[1].split_datapoint, right=6000)
     plt.show()
-    plt.savefig('plots/last_prediction.pdf')
+#    plt.savefig('plots/last_prediction.pdf')
