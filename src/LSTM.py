@@ -132,6 +132,7 @@ def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n
     print('\tAll done')
 
     epochs = 10
+#    epochs = 3 # For debugging purposes
     valid_summary = 1 # Interval you make test predictions
 
 
@@ -336,10 +337,10 @@ def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n
 #          test_rmse_ot.append(current_test_rmse)
 #          test_mae_ot.append(current_test_mae)
 #          test_maxae_ot.append(current_test_maxae)
-          test_ae_ot.append(ae_test_loss_seq)
+#          test_ae_ot.append(current_test_ae)
 #          test_mse_ot.append(format(current_test_mse, '7.2f'))
           test_lincor_ot.append(float(format(current_lincor, '7.4f')))  
-#          test_ae_ot.append(float(format(current_test_ae, '7.4f')))  
+          test_ae_ot.append(float(format(current_test_ae, '7.4f')))   # KP June 18- this was previously commented out
           test_mre_ot.append(float(format(current_test_mre, '7.4f')))
           test_rmse_ot.append(float(format(current_test_rmse, '7.4f')))
           test_mae_ot.append(float(format(current_test_mae, '7.4f')))
@@ -372,7 +373,7 @@ def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n
                 false_count[ep] += 1
 
         correct[ep] = (correct_count[ep]*100)/len(mid_data_over_time[ep])
-          
-#          KPI = 1
+		   
+    correct = list(np.concatenate(correct))  ### Changed for format to match as other KPI's
     KPI = {'mse':test_mse_ot, 'lincor':test_lincor_ot, 'mre':test_mre_ot, 'rmse': test_rmse_ot,'mae':test_mae_ot, 'maxae':test_maxae_ot, 'ae':test_ae_ot, 'correct':correct}
     return x_axis_seq, predictions_over_time, data_for_output_perm, KPI, mid_data_over_time

@@ -11,7 +11,7 @@ from src.data_operations.import_as_dict import get_data
 from src.data_operations.preprocessing import PreProc
 from src.LSTM import LSTM
 from src.makeplots import prediction
-#from src.performance_output.txt_saver import PerformanceSaver
+from src.performance_output.txt_saver import PerformanceSaver
 
 # =============================================================================
 # Preprocessing
@@ -62,10 +62,11 @@ num_nodes = [200, 200, 150]     # Number of hidden nodes in each layer of the de
 n_layers = len(num_nodes)       # number of layers
 dropout = 0.2                   # Dropout amount
 
+
 # Define number of days to predict for in the future
-#n_predict_once = 10
+n_predict_once = 10
 #n_predict_once = 25
-n_predict_once = 50     #
+#n_predict_once = 50     #
 #n_predict_once = 100
 #n_predict_once = 200
 
@@ -76,14 +77,14 @@ x_axis_seq, predictions_over_time, run_data, KPI,  mid_data_over_time = LSTM(pp_
 # Saving the results and finding the best epoch
 # =============================================================================
 
-#best_prediction_epoch = PerformanceSaver(pp_data_price, run_data, KPI, n_predict_once, num_unrollings, batch_size)
+# Now automatically chooses the one with the highest 'correct' 
+best_prediction_epoch = PerformanceSaver(pp_data_price, run_data, KPI, n_predict_once, num_unrollings, batch_size)
 
 # =============================================================================
 # Visualisation of the results
 # =============================================================================
 #%%
-#best_prediction_epoch = np.where(KPI['correct'] == np.amax(KPI['correct']))
-best_prediction_epoch = 4
+#best_prediction_epoch = 4
 plot = prediction(df, pp_data, x_axis_seq, predictions_over_time, best_prediction_epoch)
 
 
