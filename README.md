@@ -8,6 +8,13 @@ The purpose of this project is to predict stock market values based on a Long Sh
 - sklearn
 - mpl_finance
 
+## Usage
+Change the parameters in the main.py file as one wishes. To run the code: direct to the main folder and run the code via the Anaconda Command Prompt.
+```bash
+python main.py
+```
+The graphical output can be found in the plots folder. The KPI's output in src/performance_output.
+
 ## Purpose of the project
 - Get new insights into deep learning.
 
