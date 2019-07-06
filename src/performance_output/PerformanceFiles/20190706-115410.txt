@@ -1,0 +1,13 @@
+correct
+Best prediction epoch: 1 with MSE 0.023, MRE 0.15
+Epoch nr 1 0, MSE= 0.29238
+Epoch nr 2 0, MSE= 0.07137
+Epoch nr 3 0, MSE= 0.09560
+Epoch nr 4 0, MSE= 0.02296
+Epoch nr 5 0, MSE= 0.02257
+Epoch nr 6 0, MSE= 0.03523
+Epoch nr 7 0, MSE= 0.00955
+Epoch nr 8 0, MSE= 0.01939
+Epoch nr 9 0, MSE= 0.01016
+Epoch nr 10 0, MSE= 0.02030
+[43, 56, 43, 39, 43, 43, 47, 43, 39, 43]

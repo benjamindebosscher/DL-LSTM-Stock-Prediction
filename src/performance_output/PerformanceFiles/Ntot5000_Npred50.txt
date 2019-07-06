@@ -1,32 +1,12 @@
 correct
-Best prediction epoch: 1 with MSE 0.0099, MRE 0.1135
-Epoch nr 1 0, MSE= 0.15587
-Epoch nr 2 0, MSE= 0.03294
-Epoch nr 3 0, MSE= 0.05299
-Epoch nr 4 0, MSE= 0.05121
-Epoch nr 5 0, MSE= 0.00941
-Epoch nr 6 0, MSE= 0.00849
-Epoch nr 7 0, MSE= 0.01459
-Epoch nr 8 0, MSE= 0.01631
-Epoch nr 9 0, MSE= 0.01132
-Epoch nr 10 0, MSE= 0.01488
-Epoch nr 11 0, MSE= 0.00994
-Epoch nr 12 0, MSE= 0.01406
-Epoch nr 13 0, MSE= 0.01171
-Epoch nr 14 0, MSE= 0.01283
-Epoch nr 15 0, MSE= 0.01229
-Epoch nr 16 0, MSE= 0.01229
-Epoch nr 17 0, MSE= 0.01232
-Epoch nr 18 0, MSE= 0.01082
-Epoch nr 19 0, MSE= 0.01166
-Epoch nr 20 0, MSE= 0.01215
-Epoch nr 21 0, MSE= 0.01162
-Epoch nr 22 0, MSE= 0.01154
-Epoch nr 23 0, MSE= 0.01192
-Epoch nr 24 0, MSE= 0.01211
-Epoch nr 25 0, MSE= 0.01202
-Epoch nr 26 0, MSE= 0.01198
-Epoch nr 27 0, MSE= 0.01192
-Epoch nr 28 0, MSE= 0.01185
-Epoch nr 29 0, MSE= 0.01189
-Epoch nr 30 0, MSE= 0.01197
+Best prediction epoch: 1 with MSE 0.01, MRE 0.1126
+Epoch nr 1 0, MSE= 0.28992
+Epoch nr 2 0, MSE= 0.05086
+Epoch nr 3 0, MSE= 0.08412
+Epoch nr 4 0, MSE= 0.00892
+Epoch nr 5 0, MSE= 0.01210
+Epoch nr 6 0, MSE= 0.00866
+Epoch nr 7 0, MSE= 0.01004
+Epoch nr 8 0, MSE= 0.01302
+Epoch nr 9 0, MSE= 0.01099
+Epoch nr 10 0, MSE= 0.01194

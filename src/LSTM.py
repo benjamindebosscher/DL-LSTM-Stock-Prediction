@@ -67,7 +67,7 @@ def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n
     
     #all_outputs is output of regression layer
     all_outputs = tf.nn.xw_plus_b(all_lstm_outputs, w, b)
-    print(all_outputs.get_shape())
+#    print(all_outputs.get_shape())
 
     #split_outputs is a list with 500 vectors of length 50 (batch = 500, num_unrollings = 50)
     split_outputs = tf.split(all_outputs, num_unrollings, axis=0)
@@ -77,14 +77,14 @@ def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n
     # Therefore, take the mean error or each batch and get the sum of that over all the unrolled steps
 
     #with control dependencies, the loss will only be calculated if the states are first assigned
-    print('Defining training Loss')
+#    print('Defining training Loss')
     loss = 0.0
     with tf.control_dependencies([tf.assign(c[li], state[li][0]) for li in range(n_layers)]+
                                  [tf.assign(h[li], state[li][1]) for li in range(n_layers)]):
       for ui in range(num_unrollings):
               loss += tf.reduce_mean(0.5*(split_outputs[ui]-train_outputs[ui])**2)
 
-    print('Learning rate decay operations')
+#    print('Learning rate decay operations')
     global_step = tf.Variable(0, trainable=False)
     inc_gstep = tf.assign(global_step, global_step + 1)
     tf_learning_rate = tf.placeholder(shape=None, dtype=tf.float32)
@@ -96,16 +96,16 @@ def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n
         tf_min_learning_rate)
 
     # Optimizer.
-    print('TF Optimization operations')
+#    print('TF Optimization operations')
     optimizer = tf.train.AdamOptimizer(learning_rate)
     gradients, v = zip(*optimizer.compute_gradients(loss))
     gradients, _ = tf.clip_by_global_norm(gradients, 5.0)
     optimizer = optimizer.apply_gradients(
         zip(gradients, v))
 
-    print('\tAll done')
+#    print('\tAll done')
 
-    print('Defining prediction related TF functions')
+#    print('Defining prediction related TF functions')
 
     sample_inputs = tf.placeholder(tf.float32, shape=[1, D])
 
@@ -129,10 +129,10 @@ def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n
                                  [tf.assign(sample_h[li], sample_state[li][1]) for li in range(n_layers)]):
       sample_prediction = tf.nn.xw_plus_b(tf.reshape(sample_outputs, [1, -1]), w, b)
 
-    print('\tAll done')
+#    print('\tAll done')
 
     epochs = 10
-#    epochs = 3 # For debugging purposes
+#    epochs = 2 # For debugging purposes
     valid_summary = 1 # Interval you make test predictions
 
 
@@ -156,7 +156,7 @@ def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n
     loss_nondecrease_count = 0
     loss_nondecrease_threshold = 2 # If the test error hasn't increased in this many steps, decrease learning rate
 
-    print('Initialized')
+#    print('Initialized')
     average_loss = 0
 
     # Define data generator
@@ -183,12 +183,12 @@ def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n
 
             u_data_prices, u_labels_prices = data_gen_prices.unroll_batches()
             u_data_volume, u_labels_volume = data_gen_volume.unroll_batches()
-            
-            u_data = np.zeros([num_unrollings, batch_size, 2])
+            u_data = np.zeros([num_unrollings, batch_size, D])
+#            u_data = np.zeros([num_unrollings, batch_size, 1])
             u_data[0:,0:,0] = u_data_prices
             u_data[0:,0:,1] = u_data_volume
             
-            u_labels = np.zeros([num_unrollings, batch_size, 2])
+            u_labels = np.zeros([num_unrollings, batch_size, D])
             u_labels[0:,0:,0] = u_labels_prices
             u_labels[0:,0:,1] = u_labels_volume
 
@@ -209,8 +209,8 @@ def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n
           average_loss = average_loss/(valid_summary*(train_seq_length//batch_size))
 
           # The average loss
-          if (ep+1)%valid_summary == 0:
-            print('Average loss at step %d: %f' % (ep+1, average_loss))
+#          if (ep+1)%valid_summary == 0:
+#            print('Average loss at step %d: %f' % (ep+1, average_loss))
 
           train_mse_ot.append(average_loss)
 
@@ -261,13 +261,13 @@ def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n
 
             # Make predictions for this many steps
             # Each prediction uses previous prediction as it's current input
-            for pred_i in range(n_predict_once):
+            for pred_i in range(1,n_predict_once):
 
               pred = session.run(sample_prediction, feed_dict=feed_dict)
               pred.reshape(-1,1)
               
               our_predictions.append(np.asscalar(pred[0][0]))
-              mid_data.append(pp_data[0].all_mid_data[w_i + pred_i])
+              mid_data.append(pp_data[0].all_mid_data[w_i + pred_i]-1)
               
               #add function that predict volume input!!!!
 
@@ -330,7 +330,7 @@ def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n
           if loss_nondecrease_count > loss_nondecrease_threshold:
                 session.run(inc_gstep)
                 loss_nondecrease_count = 0
-                print('\tDecreasing learning rate by 0.5')
+#                print('\tDecreasing learning rate by 0.5')
           test_mse_ot.append(float(format(current_test_mse, '7.4f'))) ### KP: Changed format to save fewer decimals
 #          test_lincor_ot.append(current_lincor)  
 #          test_mre_ot.append(current_test_mre)
@@ -347,10 +347,10 @@ def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n
           test_maxae_ot.append(float(format(current_test_maxae, '7.4f')))
           data_for_output_temp = data_for_output_temp + ', MSE= ' + str(np.mean(mse_test_loss_seq))[:7]
 #          test_mse_ot.append(current_test_mse) Commented out by Kipras. Operation already done above!
-          print('\tTest MSE: %.5f'%np.mean(mse_test_loss_seq))
+#          print('\tTest MSE: %.5f'%np.mean(mse_test_loss_seq))
           predictions_over_time.append(predictions_seq)
           mid_data_over_time.append(mid_data_seq)
-          print('\tFinished Predictions')
+#          print('\tFinished Predictions')
           data_for_output_perm = np.vstack((data_for_output_perm, data_for_output_temp))
           
 #          KPI = {'Mean Squared Error':test_mse_ot, 'lincor':test_lincor_ot, 'Mean Relative Error':test_mre_ot, 'Root mean squared error': test_rmse_ot,'Mean Absolute Error':test_mae_ot, 'Max Absolute Error':test_maxae_ot}
@@ -365,15 +365,16 @@ def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n
             diff_pred = predictions_over_time[ep][count][n_predict_once-1]-predictions_over_time[ep][count][0]
             if diff_price > 0 and diff_pred > 0:
                 correct_count[ep] += 1
-            if diff_price < 0 and diff_pred < 0:
+            elif diff_price < 0 and diff_pred < 0:
                 correct_count[ep] += 1
-            if diff_price < 0 and diff_pred > 0:
+            elif diff_price < 0 and diff_pred > 0:
                 false_count[ep] += 1
-            if diff_price > 0 and diff_pred < 0:
+            elif diff_price > 0 and diff_pred < 0:
                 false_count[ep] += 1
 
         correct[ep] = (correct_count[ep]*100)/len(mid_data_over_time[ep])
 		   
     correct = list(np.concatenate(correct))  ### Changed for format to match as other KPI's
     KPI = {'mse':test_mse_ot, 'lincor':test_lincor_ot, 'mre':test_mre_ot, 'rmse': test_rmse_ot,'mae':test_mae_ot, 'maxae':test_maxae_ot, 'ae':test_ae_ot, 'correct':correct}
+    session.close() ## For  many sequential runs
     return x_axis_seq, predictions_over_time, data_for_output_perm, KPI, mid_data_over_time

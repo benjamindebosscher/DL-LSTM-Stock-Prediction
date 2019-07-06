@@ -1,0 +1,23 @@
+correct
+Best prediction epoch: 3 with MSE 0.0105, MRE 0.1145
+Epoch nr 1 0, MSE= 0.01643
+Epoch nr 2 0, MSE= 0.03031
+Epoch nr 3 0, MSE= 0.01053
+Epoch nr 4 0, MSE= 0.01520
+Epoch nr 5 0, MSE= 0.01235
+Epoch nr 6 0, MSE= 0.01235
+Epoch nr 7 0, MSE= 0.01237
+Epoch nr 8 0, MSE= 0.01128
+Epoch nr 9 0, MSE= 0.01160
+Epoch nr 10 0, MSE= 0.01461
+Epoch nr 11 0, MSE= 0.01297
+Epoch nr 12 0, MSE= 0.01383
+Epoch nr 13 0, MSE= 0.01433
+Epoch nr 14 0, MSE= 0.01466
+Epoch nr 15 0, MSE= 0.01712
+Epoch nr 16 0, MSE= 0.01508
+Epoch nr 17 0, MSE= 0.01646
+Epoch nr 18 0, MSE= 0.01576
+Epoch nr 19 0, MSE= 0.01538
+Epoch nr 20 0, MSE= 0.01584
+[43, 47, 39, 43, 43, 43, 43, 43, 43, 43, 43, 43, 43, 43, 43, 43, 43, 43, 43, 43]

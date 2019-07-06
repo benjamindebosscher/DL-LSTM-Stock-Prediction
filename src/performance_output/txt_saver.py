@@ -5,7 +5,7 @@ Created on Sun May 19 16:56:05 2019
 import datetime as dt
 import numpy as np
 import pandas as pd
-def PerformanceSaver(data_obj, run_data, KPI,  n_predict_once, num_unrollings, batch_size):
+def PerformanceSaver(data_obj, run_data, KPI,  n_predict_once, num_unrollings, batch_size, dropout, num_nodes):
 	''' 
 	This is used to return the lowest MSE run and a text file
 	with the relevant time sequence parameters:
@@ -21,12 +21,15 @@ def PerformanceSaver(data_obj, run_data, KPI,  n_predict_once, num_unrollings, b
 	
 	'''
 	SAVE_FOLDER = 'src/performance_output/PerformanceFiles/' # Folder to save the run results
-	title = SAVE_FOLDER + 'Ntot' + str(np.shape(data_obj.train_data)[0]) + '_Npred' + str(n_predict_once)+'.txt' # Title for text file
+	title = SAVE_FOLDER + dt.datetime.now().strftime('%Y%m%d-%H%M%S') + '.txt'
+#	title = SAVE_FOLDER + str(dt.datetime.now().isoformat()[:-7])
+#	title = SAVE_FOLDER + 'lalala'
 	header = np.array(('Train data size =' + str(np.shape(data_obj.train_data)[0]), 
 					   'Num_unrolling = ' + str(num_unrollings),
 					   'batch_size = ' + str(batch_size),
 					   'n_predict_once = ' + str(n_predict_once)))
 	header = np.reshape(header, (4,1))
+#	print(title)
 	
 	run_data = run_data[1:]  # Removing an empty placeholder in the run_data
 	### 
@@ -39,9 +42,9 @@ def PerformanceSaver(data_obj, run_data, KPI,  n_predict_once, num_unrollings, b
 	best_ind = max(set(indices), key = indices.count) # Taking the most frequent index within indices
 	# Saving best prediction to text file
 	best_pred = np.array('Best prediction epoch: ' + str(best_ind + 1) + ' with MSE ' +str(KPI['mse'][ind]) + ', MRE ' +str(KPI['mre'][ind]))
-	header2 = ['date', 'best epoch', 'from KPI:'] +  headers
+	header2 = ['Date', 'Best epoch', 'From KPI:', 'Data size', 'Num_unrolling', 'Batch_size', 'n_predict_once', 'Dropout', 'Num_nodes'] +  headers
 	# Collecting the text file together
-	output_file = np.vstack((header,best_pred,run_data)) 
+	output_file = np.vstack((header,best_pred,run_data, str(KPI['correct'])))
 	data_temp = {'date' : dt.datetime.ctime}
 		
 	# Outputting text file
@@ -54,7 +57,7 @@ def PerformanceSaver(data_obj, run_data, KPI,  n_predict_once, num_unrollings, b
 	headers = list(KPI.keys())
 	indices = [] # Index list for index of each lowest KPI from every epoch
 			### Read current All_data csv file
-	data_saver = pd.read_csv('src/performance_output/PerformanceFiles/All_results.csv')
+	data_saver = pd.read_csv('src/performance_output/PerformanceFiles/All_results_hyper.csv')
 	for header in headers:
 		if header == 'correct':
 			ind = KPI[header].index(max(KPI[header]))
@@ -63,7 +66,7 @@ def PerformanceSaver(data_obj, run_data, KPI,  n_predict_once, num_unrollings, b
 		indices.append(ind)
 #	ind_chosen = max(set(indices)) # If choosing from other KPI
 	ind_chosen = KPI['correct'].index(max(KPI[header])) # If only using Correctness
-	header2 = ['Date', 'Best epoch', 'From KPI:', 'Data size', 'Num_unrolling', 'Batch_size', 'n_predict_once'] +  headers
+	
 #	data_temp = np.zeros(np.shape(header2)[0])
 	
 
@@ -74,13 +77,13 @@ def PerformanceSaver(data_obj, run_data, KPI,  n_predict_once, num_unrollings, b
 	for i in res_list:
 		KPI_elems += headers[i] + ', '
 	KPI_elems = KPI_elems[:-2]
-	data_temp = {header2[0] : dt.datetime.now().ctime(), header2[1] : ind_chosen, header2[2] : KPI_elems, header2[3] : np.shape(data_obj.train_data)[0], header2[4] : num_unrollings, header2[5] : batch_size, header2[6] : n_predict_once}
+	data_temp = {header2[0] : dt.datetime.now().ctime(), header2[1] : ind_chosen, header2[2] : KPI_elems, header2[3] : np.shape(data_obj.train_data)[0], header2[4] : num_unrollings, header2[5] : batch_size, header2[6] : n_predict_once, header2[7] : dropout, header2[8]: str(num_nodes)}
 	for h in headers:
 		data_temp[h] = KPI[h][ind_chosen]
 	data_toadd = pd.DataFrame(data_temp, index = [0])
 	data_all = pd.concat([data_saver, data_toadd], ignore_index = True)
 #	data_all = pd.concat([data_saver, data_toadd], ignore_index = True)
-	data_all.to_csv('src/performance_output/PerformanceFiles/All_results.csv', index = False)
+	data_all.to_csv('src/performance_output/PerformanceFiles/All_results_hyper.csv', index = False)
 	print('Best prediction epoch: ', ind_chosen, ' with KPI: ')
 	for key in KPI.keys():
 		print('KPI: ', key, ' =', KPI[key][ind_chosen])
