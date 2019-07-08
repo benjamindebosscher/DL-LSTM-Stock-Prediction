@@ -47,7 +47,6 @@ def PerformanceSaver(data_obj, run_data, KPI,  n_predict_once, num_unrollings, b
 	# Outputting text file
 	np.savetxt(title, output_file, fmt = '%s')
 	
-	
 # =============================================================================
 # Saving all data in CSV file
 # =============================================================================
