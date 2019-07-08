@@ -26,8 +26,9 @@ stocks = get_data(data_source, market)
 df = stocks['PHIA']
 
 # Preprocessing data
-split_datapoint = 5000      # must be integer multiple of smoothing_window_size
-smoothing_window_size = 1000 #must be integer multiple of n_predict_once/number_of_unrollings
+split_datapoint = 5000          # must be integer multiple of smoothing_window_size
+smoothing_window_size = 1000    # must be integer multiple of n_predict_once/number_of_unrollings
+
 # Number of data points to remove. Uncomment one option to remove the first N training data points
 remove_data = 0
 #remove_data = 1000
@@ -46,7 +47,7 @@ pp_data = []
 pp_data.insert(0, pp_data_price)
 pp_data.insert(1, pp_data_volume)
 
-if remove_data!=0: # Removing data points! Or not! This if statement will know.
+if remove_data!=0:      # Removing data points! Or not! This if statement will know.
 	for data in pp_data:
 		data.limitdata(remove_data)
 #%%
@@ -55,7 +56,7 @@ if remove_data!=0: # Removing data points! Or not! This if statement will know.
 # =============================================================================
 
 # Define hyperparameters
-D = 2                           # Dimensionality of the data. Since our data is 1-D this would be 1
+D = 2                           # Dimensionality of the data. Since our data is 2-D this would be 2
 num_unrollings = 50             # Number of time steps you look into the future. (also number of batches)
 batch_size = 500                # Number of samples in a batch
 num_nodes = [200, 200, 150]     # Number of hidden nodes in each layer of the deep LSTM stack we're using
@@ -64,9 +65,9 @@ dropout = 0.2                   # Dropout amount
 
 
 # Define number of days to predict for in the future
-n_predict_once = 10
-#n_predict_once = 25
-#n_predict_once = 50     #
+#n_predict_once = 10
+n_predict_once = 25
+#n_predict_once = 50
 #n_predict_once = 100
 #n_predict_once = 200
 
@@ -80,12 +81,9 @@ x_axis_seq, predictions_over_time, run_data, KPI,  mid_data_over_time = LSTM(pp_
 # Now automatically chooses the one with the highest 'correct' 
 best_prediction_epoch = PerformanceSaver(pp_data_price, run_data, KPI, n_predict_once, num_unrollings, batch_size)
 
+#%%
 # =============================================================================
 # Visualisation of the results
 # =============================================================================
-#%%
 #best_prediction_epoch = 4
 plot = prediction(df, pp_data, x_axis_seq, predictions_over_time, best_prediction_epoch)
-
-
-

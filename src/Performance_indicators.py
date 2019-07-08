@@ -1,4 +1,4 @@
-#%% Performance indicators
+# Performance indicators
 import math
 import numpy as np
 

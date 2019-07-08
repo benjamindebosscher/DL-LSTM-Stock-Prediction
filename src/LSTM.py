@@ -1,12 +1,5 @@
 '''LSTM
-        TO BE COMPLETED
 '''
-#VOLUME MOET OOK PREDICTED WORDEN, DAAR ZIT NU DE ERROR
-#CHECK VARIABLE SAMPLE INPUT
-#CURRENT VOLUME COULD INTRODUCE ERRORS
-#dus ik denk dat je als output ook de volume moet hebben en ook de prijs, en dat is allebei gebasseerd op hele output
-
-
 
 import tensorflow as tf
 import numpy as np
@@ -17,7 +10,6 @@ def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n
     '''LSTM definition
             TO BE COMPLETED
     '''
-    #if we do the optimization with the for loop im not sure if we should  include this
     tf.reset_default_graph() # This is important in case you run this multiple times
 
     # Input data.
@@ -65,18 +57,18 @@ def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n
     
     all_lstm_outputs = tf.reshape(all_lstm_outputs, [batch_size*num_unrollings, num_nodes[-1]])
     
-    #all_outputs is output of regression layer
+    # all_outputs is output of regression layer
     all_outputs = tf.nn.xw_plus_b(all_lstm_outputs, w, b)
     print(all_outputs.get_shape())
 
-    #split_outputs is a list with 500 vectors of length 50 (batch = 500, num_unrollings = 50)
+    # split_outputs is a list with 500 vectors of length 50 (batch = 500, num_unrollings = 50)
     split_outputs = tf.split(all_outputs, num_unrollings, axis=0)
 
     # When calculating the loss you need to be careful about the exact form, because you calculate
     # loss of all the unrolled steps at the same time
     # Therefore, take the mean error or each batch and get the sum of that over all the unrolled steps
 
-    #with control dependencies, the loss will only be calculated if the states are first assigned
+    # with control dependencies, the loss will only be calculated if the states are first assigned
     print('Defining training Loss')
     loss = 0.0
     with tf.control_dependencies([tf.assign(c[li], state[li][0]) for li in range(n_layers)]+
@@ -132,7 +124,7 @@ def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n
     print('\tAll done')
 
     epochs = 10
-#    epochs = 3 # For debugging purposes
+
     valid_summary = 1 # Interval you make test predictions
 
 
@@ -374,6 +366,6 @@ def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n
 
         correct[ep] = (correct_count[ep]*100)/len(mid_data_over_time[ep])
 		   
-    correct = list(np.concatenate(correct))  ### Changed for format to match as other KPI's
+    correct = list(np.concatenate(correct))  # Changed for format to match as other KPI's
     KPI = {'mse':test_mse_ot, 'lincor':test_lincor_ot, 'mre':test_mre_ot, 'rmse': test_rmse_ot,'mae':test_mae_ot, 'maxae':test_maxae_ot, 'ae':test_ae_ot, 'correct':correct}
     return x_axis_seq, predictions_over_time, data_for_output_perm, KPI, mid_data_over_time
