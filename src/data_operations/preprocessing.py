@@ -1,7 +1,7 @@
 '''Preprocess data before applying algorithm
         First, test and train data should be splitted
         Then, the data will be normalized
-        Lastly, exponential moving average smoothing will be applied
+        Lastly, exponential moving average smoothing will be applied to the training set
 '''
 
 import numpy as np
@@ -17,7 +17,7 @@ class PreProc(object):
         self.scaler = MinMaxScaler()
         self.train_data = 0
         self.test_data = 0
-        self.all_mid_data = 0
+        self.mid_data = 0
         self.split_datapoint = 0
         
         if col_name == "Prices":
@@ -42,7 +42,7 @@ class PreProc(object):
         self.train_data = self.train_data[remove_data:]
 
     def normalize_smooth(self, smoothing_window_size, EMA=0.0, gamma=0.1):
-        '''Normalizes and smooths training data (and test data)
+        '''Normalizes and smooths training data 
         '''
         # Train the Scaler with training data and smooth data
         for di in range(0, self.split_datapoint-smoothing_window_size, smoothing_window_size):  # FIX RANGES, DUNNO YET
@@ -68,4 +68,4 @@ class PreProc(object):
             self.train_data[ti] = EMA
 
             # Used for visualization and test purposes
-            self.all_mid_data = np.concatenate([self.train_data, self.test_data], axis=0)
+#            self.mid_data = np.concatenate([self.train_data, self.test_data], axis=0)

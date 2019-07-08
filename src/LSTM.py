@@ -13,13 +13,14 @@ import numpy as np
 import math
 from src.data_operations.augmentation import DataGeneratorSeq
 
-def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n_predict_once):
+def LSTM(price_train_data_AS,price_test_data_AS,price_all_mid_data_AS,volume_train_data_AS,volume_test_data_AS,volume_all_mid_data_AS, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n_predict_once):
     '''LSTM definition
             TO BE COMPLETED
     '''
+    split_datapoint = 86985
     #if we do the optimization with the for loop im not sure if we should  include this
     tf.reset_default_graph() # This is important in case you run this multiple times
-
+    
     # Input data.
     train_inputs, train_outputs = [], []
 
@@ -131,12 +132,11 @@ def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n
 
     print('\tAll done')
 
-    epochs = 10
-#    epochs = 3 # For debugging purposes
+    epochs = 20
     valid_summary = 1 # Interval you make test predictions
 
 
-    train_seq_length = pp_data[0].train_data.size # Full length of the training data
+    train_seq_length = price_train_data_AS.size # Full length of the training data
 
     train_mse_ot = [] # Accumulate Train losses
     test_mse_ot = [] # Accumulate Test loss
@@ -160,13 +160,13 @@ def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n
     average_loss = 0
 
     # Define data generator
-    data_gen_prices = DataGeneratorSeq(pp_data[0].train_data, batch_size, num_unrollings)
-    data_gen_volume  = DataGeneratorSeq(pp_data[1].train_data, batch_size, num_unrollings)
+    data_gen_prices = DataGeneratorSeq(price_train_data_AS, batch_size, num_unrollings)
+    data_gen_volume  = DataGeneratorSeq(volume_train_data_AS, batch_size, num_unrollings)
 
     x_axis_seq = []
 
     # Points you start our test predictions from, STAYS THE SAME since prices are tested
-    test_points_seq = np.arange(pp_data[0].split_datapoint, pp_data[0].all_mid_data.size-pp_data[0].all_mid_data.size%n_predict_once, n_predict_once).tolist()    ############## np.arange(11000,12000,50).tolist()  CORRECT???
+    test_points_seq = np.arange(split_datapoint, price_all_mid_data_AS.size-price_all_mid_data_AS.size%n_predict_once, n_predict_once).tolist()    ############## np.arange(11000,12000,50).tolist()  CORRECT???
 
 	# Making a data saving array
     data_for_output_perm = np.array(('')) # Used to store the data for all the epochs
@@ -247,15 +247,15 @@ def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n
             # Feed in the recent past behavior of stock prices
             # to make predictions from that point onwards
             for tr_i in range(w_i-num_unrollings+1, w_i-1):
-              current_price = pp_data[0].all_mid_data[tr_i]
-              current_volume = pp_data[1].all_mid_data[tr_i]
+              current_price = price_all_mid_data_AS[tr_i]
+              current_volume = volume_all_mid_data_AS[tr_i]
               feed_dict[sample_inputs] = np.array([current_price, current_volume]).reshape(1, 2)
               _ = session.run(sample_prediction, feed_dict=feed_dict)
 
             feed_dict = {}
 
-            current_price = pp_data[0].all_mid_data[w_i-1]
-            current_volume = pp_data[1].all_mid_data[w_i-1]
+            current_price = price_all_mid_data_AS[w_i-1]
+            current_volume = volume_all_mid_data_AS[w_i-1]
 
             feed_dict[sample_inputs] = np.array([current_price, current_volume]).reshape(1, 2)
 
@@ -267,7 +267,7 @@ def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n
               pred.reshape(-1,1)
               
               our_predictions.append(np.asscalar(pred[0][0]))
-              mid_data.append(pp_data[0].all_mid_data[w_i + pred_i])
+              mid_data.append(price_all_mid_data_AS[w_i + pred_i])
               
               #add function that predict volume input!!!!
 
@@ -277,10 +277,10 @@ def LSTM(pp_data, D, num_unrollings, batch_size, num_nodes, n_layers, dropout, n
                 # Only calculate x_axis values in the first validation epoch
                 x_axis.append(w_i+pred_i)
 
-              mse_test_loss += 0.5*(pred[0][0]-pp_data[0].all_mid_data[w_i+pred_i])**2
-              mre_test_loss += abs((pred[0][0]-pp_data[0].all_mid_data[w_i+pred_i])/(pp_data[0].all_mid_data[w_i+pred_i]))
+              mse_test_loss += 0.5*(pred[0][0]-price_all_mid_data_AS[w_i+pred_i])**2
+              mre_test_loss += abs((pred[0][0]-price_all_mid_data_AS[w_i+pred_i])/(price_all_mid_data_AS[w_i+pred_i]))
 #              mae_test_loss += abs(pred[0][0]-pp_data[0].all_mid_data[w_i+pred_i]
-              mae_test_loss += (pred[0][0]-pp_data[0].all_mid_data[w_i+pred_i])
+              mae_test_loss += (pred[0][0]-price_all_mid_data_AS[w_i+pred_i])
               ae_test_loss.append(mae_test_loss)
 
             #after prediction is made, reset sample states

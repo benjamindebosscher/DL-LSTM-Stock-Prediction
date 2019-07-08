@@ -43,7 +43,7 @@ def candlestick(df, sampledays='10D', plottitle=None):
     plt.suptitle(plottitle,fontsize=16)
     plt.show()
 
-def prediction(df, pp_data, x_axis_seq, predictions_over_time, best_prediction_epoch):
+def prediction(df,price_all_mid_data_AS, volume_all_mid_data_AS, x_axis_seq, predictions_over_time, best_prediction_epoch):
 #    plt.figure(figsize = (18,18))
 #    plt.subplot(2,1,1)
 #    plt.plot(range(df.shape[0]),pp_data[0].all_mid_data,color='b')
@@ -64,7 +64,7 @@ def prediction(df, pp_data, x_axis_seq, predictions_over_time, best_prediction_e
 #    plt.subplot(2,1,2)
 
     # Predicting the best test prediction you got
-    plt.plot(range(df.shape[0]),pp_data[0].all_mid_data,color='b')
+    plt.plot(range(price_all_mid_data_AS.shape[0]),price_all_mid_data_AS,color='b')
     for xval,yval in zip(x_axis_seq,predictions_over_time[best_prediction_epoch]):
         plt.plot(xval,yval,color='r')
 
@@ -76,6 +76,6 @@ def prediction(df, pp_data, x_axis_seq, predictions_over_time, best_prediction_e
     plt.xlabel('Datapoint [-]',fontsize=20)
     plt.tick_params(labelsize=15)
     plt.ylabel('Normalised Mid Price [-]',fontsize=20)
-    plt.xlim(left=pp_data[1].split_datapoint, right=6000)
+    plt.xlim(left=86985, right=110000)
     plt.show()
 #    plt.savefig('plots/last_prediction.pdf')
